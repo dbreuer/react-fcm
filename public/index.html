@@ -6,57 +6,18 @@
     }
 </style>
 <body>
-    <div id="token"></div>
-    <div id="msg"></div>
-    <div id="notis"></div>
-    <div id="err"></div>
-    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-messaging.js"></script>
+    <h1>Web Push demo</h1>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
     <script>
-        MsgElem = document.getElementById("msg");
-        TokenElem = document.getElementById("token");
-        NotisElem = document.getElementById("notis");
-        ErrElem = document.getElementById("err");
-        // Initialize Firebase
-        // TODO: Replace with your project's customized code snippet
-        var config = {
-          apiKey: "AIzaSyBDLnPzyb9TFFC4AKJXRSnSppnsHxNlpzk",
-          projectId: "pedivan-logistic-admin",
-          messagingSenderId: "23476810254",
-          appId: "1:23476810254:web:cf2a8a74c8ee10b1a6425f",
-        };
-        firebase.initializeApp(config);
-
-        const messaging = firebase.messaging();
-        messaging
-            .requestPermission()
-            .then(function () {
-                MsgElem.innerHTML = "Notification permission granted." 
-                console.log("Notification permission granted.");
-                
-                // get the token in the form of promise
-                return messaging.getToken()
-            })
-            .then(function(token) {
-                TokenElem.innerHTML = "token is : " + token
-            })
-            .catch(function (err) {
-                ErrElem.innerHTML =  ErrElem.innerHTML + "; " + err
-                console.log("Unable to get permission to notify.", err);
-            });
-
-        let enableForegroundNotification = true;
-        messaging.onMessage(function(payload) {
-            console.log("Message received. ", payload);
-            NotisElem.innerHTML = NotisElem.innerHTML + JSON.stringify(payload);
-
-            if(enableForegroundNotification) {
-                const {title, ...options} = payload.notification;
-                navigator.serviceWorker.getRegistrations().then(registration => {
-                    registration[0].showNotification(title, options);
-                });
-            }
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+        OneSignal.init({
+        appId: "f5e277a7-2cbc-42cc-aece-963323c0650d",
+        notifyButton: {
+            enable: true,
+        },
         });
+    });
     </script>
 
     </body>
