@@ -1,31 +1,39 @@
-importScripts("https://www.gstatic.com/firebasejs/5.9.4/firebase-app.js");
-importScripts("https://www.gstatic.com/firebasejs/5.9.4/firebase-messaging.js");
+importScripts("https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js");
+importScripts(
+    "https://www.gstatic.com/firebasejs/7.16.1/firebase-messaging.js",
+);
+// For an optimal experience using Cloud Messaging, also add the Firebase SDK for Analytics.
+importScripts(
+    "https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js",
+);
 
+// Initialize the Firebase app in the service worker by passing in the
+// messagingSenderId.
 firebase.initializeApp({
-  messagingSenderId: "1062407524656"
+  apiKey: "AIzaSyBDLnPzyb9TFFC4AKJXRSnSppnsHxNlpzk",
+  projectId: "pedivan-logistic-admin",
+  messagingSenderId: "23476810254",
+  appId: "1:23476810254:web:cf2a8a74c8ee10b1a6425f",
 });
 
+// Retrieve an instance of Firebase Messaging so that it can handle background
+// messages.
 const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function(payload) {
-  const promiseChain = clients
-    .matchAll({
-      type: "window",
-      includeUncontrolled: true
-    })
-    .then(windowClients => {
-      for (let i = 0; i < windowClients.length; i++) {
-        const windowClient = windowClients[i];
-        windowClient.postMessage(payload);
-      }
-    })
-    .then(() => {
-      return registration.showNotification("my notification title");
-    });
-  return promiseChain;
-});
+    console.log(
+        "[firebase-messaging-sw.js] Received background message ",
+        payload,
+    );
+    // Customize notification here
+    const notificationTitle = "Background Message Title";
+    const notificationOptions = {
+        body: "Background Message body.",
+        icon: "/itwonders-web-logo.png",
+    };
 
-self.addEventListener('notificationclick', function(event) {
-  // do what you want
-  // ...
+    return self.registration.showNotification(
+        notificationTitle,
+        notificationOptions,
+    );
 });
