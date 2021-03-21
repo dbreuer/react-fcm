@@ -1,24 +1,23 @@
 <html>
-<title>Firebase Messaging Demo</title>
-<style>
-    div {
-        margin-bottom: 15px;
-    }
-</style>
+    <head>
+        <title>Web Push Messaging Demo</title>
+        <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+        <script>
+        window.OneSignal = window.OneSignal || [];
+        OneSignal.push(function() {
+            OneSignal.init({
+            appId: "f5e277a7-2cbc-42cc-aece-963323c0650d",
+            notifyButton: {
+                enable: true,
+            },
+            });
+        });
+        </script>
+    </head>
+
 <body>
     <h1>Web Push demo</h1>
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-    <script>
-    window.OneSignal = window.OneSignal || [];
-    OneSignal.push(function() {
-        OneSignal.init({
-        appId: "f5e277a7-2cbc-42cc-aece-963323c0650d",
-        notifyButton: {
-            enable: true,
-        },
-        });
-    });
-    </script>
+   
 
     </body>
 
